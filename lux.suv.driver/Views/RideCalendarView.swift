@@ -333,7 +333,8 @@ struct CompactRideCard: View {
     let onTap: () -> Void
     
     private var statusColor: Color {
-        switch ride.status {
+        guard let status = ride.status else { return .gray }
+        switch status {
         case .requested: return .blue
         case .accepted: return .green
         case .inProgress: return .orange
@@ -343,10 +344,11 @@ struct CompactRideCard: View {
     }
     
     private var formattedTime: String {
-        guard let pickupDate = ride.pickupDate else { return "Invalid time" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        return formatter.string(from: pickupDate)
+        return ride.time
+    }
+    
+    private var statusDisplayName: String {
+        return ride.status?.displayName ?? "Unknown"
     }
     
     var body: some View {
@@ -358,7 +360,7 @@ struct CompactRideCard: View {
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.white)
                     
-                    Text(ride.status.displayName)
+                    Text(statusDisplayName)
                         .font(.system(size: 10, weight: .semibold))
                         .foregroundColor(statusColor)
                         .padding(.horizontal, 6)
@@ -377,7 +379,7 @@ struct CompactRideCard: View {
                             .fill(Color.green)
                             .frame(width: 6, height: 6)
                         
-                        Text(ride.pickupLocation)
+                        Text(ride.pickup)
                             .font(.system(size: 14, weight: .medium))
                             .foregroundColor(.white.opacity(0.9))
                             .lineLimit(1)
@@ -388,7 +390,7 @@ struct CompactRideCard: View {
                             .fill(Color.red)
                             .frame(width: 6, height: 6)
                         
-                        Text(ride.dropoffLocation)
+                        Text(ride.dropoff)
                             .font(.system(size: 14, weight: .medium))
                             .foregroundColor(.white.opacity(0.9))
                             .lineLimit(1)
