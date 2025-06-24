@@ -232,6 +232,29 @@ struct DashboardHomeView: View {
                             .padding(.horizontal, 24)
                         }
                         
+                        // Debug section - remove this in production
+                        VStack(alignment: .leading, spacing: 16) {
+                            Text("Debug Actions")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 24)
+                            
+                            Button(action: {
+                                rideService.addSampleRide()
+                            }) {
+                                Text("Add Sample Ride")
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .foregroundColor(.black)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 12)
+                                    .background(
+                                        Color(red: 0.8, green: 0.7, blue: 0.2)
+                                    )
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                            }
+                            .padding(.horizontal, 24)
+                        }
+                        
                         Spacer()
                             .frame(height: 100)
                     }
@@ -252,17 +275,10 @@ struct DashboardHomeView: View {
 struct UpcomingRideCard: View {
     let ride: Ride
     
-    private var formattedTime: String {
-        guard let pickupDate = ride.pickupDate else { return ride.time }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        return formatter.string(from: pickupDate)
-    }
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text(formattedTime)
+                Text(ride.time)
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.white)
                 
@@ -281,7 +297,7 @@ struct UpcomingRideCard: View {
                         .fill(Color.green)
                         .frame(width: 6, height: 6)
                     
-                    Text(ride.pickupLocation)
+                    Text(ride.pickup)
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.white.opacity(0.8))
                         .lineLimit(1)
@@ -292,7 +308,7 @@ struct UpcomingRideCard: View {
                         .fill(Color.red)
                         .frame(width: 6, height: 6)
                     
-                    Text(ride.dropoffLocation)
+                    Text(ride.dropoff)
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.white.opacity(0.8))
                         .lineLimit(1)

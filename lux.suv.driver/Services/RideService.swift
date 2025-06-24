@@ -57,38 +57,52 @@ class RideService: ObservableObject {
                 return
             }
             
+            // Debug: Print response status and data
+            print("API Response Status: \(httpResponse.statusCode)")
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Raw API Response: \(jsonString)")
+            }
+            
             if httpResponse.statusCode == 200 {
-                // Try to decode as array of rides directly first
-                if let ridesArray = try? JSONDecoder().decode([Ride].self, from: data) {
+                do {
+                    // Try to decode as array of rides directly first
+                    let ridesArray = try JSONDecoder().decode([Ride].self, from: data)
                     DispatchQueue.main.async {
                         self.rides = ridesArray
                         self.isLoading = false
+                        print("Successfully parsed \(ridesArray.count) rides")
                     }
-                }
-                // If that fails, try the wrapped response format
-                else if let ridesResponse = try? JSONDecoder().decode(RidesResponse.self, from: data) {
-                    DispatchQueue.main.async {
-                        self.rides = ridesResponse.rides
-                        self.isLoading = false
-                    }
-                }
-                // If both fail, try the API response format you provided
-                else if let apiRides = try? JSONDecoder().decode([APIRideResponse].self, from: data) {
-                    let convertedRides = apiRides.map { $0.toRide() }
-                    DispatchQueue.main.async {
-                        self.rides = convertedRides
-                        self.isLoading = false
-                    }
-                }
-                else {
-                    // Debug: Print the raw response
-                    if let jsonString = String(data: data, encoding: .utf8) {
-                        print("Raw API Response: \(jsonString)")
-                    }
+                } catch let decodingError {
+                    print("Failed to decode as [Ride]: \(decodingError)")
                     
-                    DispatchQueue.main.async {
-                        self.errorMessage = "Failed to parse rides data"
-                        self.isLoading = false
+                    // Try the wrapped response format
+                    do {
+                        let ridesResponse = try JSONDecoder().decode(RidesResponse.self, from: data)
+                        DispatchQueue.main.async {
+                            self.rides = ridesResponse.rides
+                            self.isLoading = false
+                            print("Successfully parsed wrapped response with \(ridesResponse.rides.count) rides")
+                        }
+                    } catch let wrappedError {
+                        print("Failed to decode as RidesResponse: \(wrappedError)")
+                        
+                        // Try the API response format you provided
+                        do {
+                            let apiRides = try JSONDecoder().decode([APIRideResponse].self, from: data)
+                            let convertedRides = apiRides.map { $0.toRide() }
+                            DispatchQueue.main.async {
+                                self.rides = convertedRides
+                                self.isLoading = false
+                                print("Successfully parsed API format with \(convertedRides.count) rides")
+                            }
+                        } catch let apiError {
+                            print("Failed to decode as [APIRideResponse]: \(apiError)")
+                            
+                            DispatchQueue.main.async {
+                                self.errorMessage = "Failed to parse rides data. Check console for details."
+                                self.isLoading = false
+                            }
+                        }
                     }
                 }
             } else {
@@ -105,6 +119,7 @@ class RideService: ObservableObject {
                 }
             }
         } catch {
+            print("Network error: \(error)")
             DispatchQueue.main.async {
                 self.errorMessage = error.localizedDescription
                 self.isLoading = false
@@ -226,19 +241,29 @@ class RideService: ObservableObject {
     // Helper methods for filtering rides
     func ridesForDate(_ date: Date) -> [Ride] {
         let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let targetDateString = dateFormatter.string(from: date)
+        
         return rides.filter { ride in
-            guard let pickupDate = ride.pickupDate else { return false }
-            return calendar.isDate(pickupDate, inSameDayAs: date)
+            return ride.date == targetDateString
         }
     }
     
     func upcomingRides() -> [Ride] {
         let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
         return rides.filter { ride in
-            guard let pickupDate = ride.pickupDate else { return false }
-            return pickupDate > now && (ride.status == .requested || ride.status == .accepted)
+            let dateTimeString = "\(ride.date) \(ride.time)"
+            guard let rideDateTime = dateFormatter.date(from: dateTimeString) else { return false }
+            return rideDateTime > now && (ride.status == .requested || ride.status == .accepted)
         }.sorted { ride1, ride2 in
-            guard let date1 = ride1.pickupDate, let date2 = ride2.pickupDate else { return false }
+            let dateTimeString1 = "\(ride1.date) \(ride1.time)"
+            let dateTimeString2 = "\(ride2.date) \(ride2.time)"
+            guard let date1 = dateFormatter.date(from: dateTimeString1),
+                  let date2 = dateFormatter.date(from: dateTimeString2) else { return false }
             return date1 < date2
         }
     }
@@ -246,7 +271,7 @@ class RideService: ObservableObject {
     // Add sample data for testing
     func addSampleRide() {
         let sampleRide = Ride(
-            id: "1",
+            id: "sample-1",
             name: "John Doe",
             email: "john@example.com",
             rideType: "hourly",
