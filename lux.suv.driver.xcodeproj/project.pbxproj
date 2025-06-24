@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		ABA8DE402E0B279300A7E995 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABA8DE2A2E0B279200A7E995 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABA8DE312E0B279200A7E995;
+			remoteInfo = lux.suv.driver;
+		};
+		ABA8DE4A2E0B279300A7E995 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABA8DE2A2E0B279200A7E995 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABA8DE312E0B279200A7E995;
+			remoteInfo = lux.suv.driver;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		ABA8DE322E0B279200A7E995 /* lux.suv.driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lux.suv.driver.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABA8DE3F2E0B279300A7E995 /* lux.suv.driverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lux.suv.driverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABA8DE492E0B279300A7E995 /* lux.suv.driverUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lux.suv.driverUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		ABA8DE342E0B279200A7E995 /* lux.suv.driver */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = lux.suv.driver;
+			sourceTree = "<group>";
+		};
+		ABA8DE422E0B279300A7E995 /* lux.suv.driverTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = lux.suv.driverTests;
+			sourceTree = "<group>";
+		};
+		ABA8DE4C2E0B279300A7E995 /* lux.suv.driverUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = lux.suv.driverUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ABA8DE2F2E0B279200A7E995 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8DE3C2E0B279300A7E995 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8DE462E0B279300A7E995 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ABA8DE292E0B279200A7E995 = {
+			isa = PBXGroup;
+			children = (
+				ABA8DE342E0B279200A7E995 /* lux.suv.driver */,
+				ABA8DE422E0B279300A7E995 /* lux.suv.driverTests */,
+				ABA8DE4C2E0B279300A7E995 /* lux.suv.driverUITests */,
+				ABA8DE332E0B279200A7E995 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ABA8DE332E0B279200A7E995 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABA8DE322E0B279200A7E995 /* lux.suv.driver.app */,
+				ABA8DE3F2E0B279300A7E995 /* lux.suv.driverTests.xctest */,
+				ABA8DE492E0B279300A7E995 /* lux.suv.driverUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ABA8DE312E0B279200A7E995 /* lux.suv.driver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABA8DE532E0B279300A7E995 /* Build configuration list for PBXNativeTarget "lux.suv.driver" */;
+			buildPhases = (
+				ABA8DE2E2E0B279200A7E995 /* Sources */,
+				ABA8DE2F2E0B279200A7E995 /* Frameworks */,
+				ABA8DE302E0B279200A7E995 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				ABA8DE342E0B279200A7E995 /* lux.suv.driver */,
+			);
+			name = lux.suv.driver;
+			packageProductDependencies = (
+			);
+			productName = lux.suv.driver;
+			productReference = ABA8DE322E0B279200A7E995 /* lux.suv.driver.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ABA8DE3E2E0B279300A7E995 /* lux.suv.driverTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABA8DE562E0B279300A7E995 /* Build configuration list for PBXNativeTarget "lux.suv.driverTests" */;
+			buildPhases = (
+				ABA8DE3B2E0B279300A7E995 /* Sources */,
+				ABA8DE3C2E0B279300A7E995 /* Frameworks */,
+				ABA8DE3D2E0B279300A7E995 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABA8DE412E0B279300A7E995 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				ABA8DE422E0B279300A7E995 /* lux.suv.driverTests */,
+			);
+			name = lux.suv.driverTests;
+			packageProductDependencies = (
+			);
+			productName = lux.suv.driverTests;
+			productReference = ABA8DE3F2E0B279300A7E995 /* lux.suv.driverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ABA8DE482E0B279300A7E995 /* lux.suv.driverUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABA8DE592E0B279300A7E995 /* Build configuration list for PBXNativeTarget "lux.suv.driverUITests" */;
+			buildPhases = (
+				ABA8DE452E0B279300A7E995 /* Sources */,
+				ABA8DE462E0B279300A7E995 /* Frameworks */,
+				ABA8DE472E0B279300A7E995 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABA8DE4B2E0B279300A7E995 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				ABA8DE4C2E0B279300A7E995 /* lux.suv.driverUITests */,
+			);
+			name = lux.suv.driverUITests;
+			packageProductDependencies = (
+			);
+			productName = lux.suv.driverUITests;
+			productReference = ABA8DE492E0B279300A7E995 /* lux.suv.driverUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ABA8DE2A2E0B279200A7E995 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					ABA8DE312E0B279200A7E995 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					ABA8DE3E2E0B279300A7E995 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = ABA8DE312E0B279200A7E995;
+					};
+					ABA8DE482E0B279300A7E995 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = ABA8DE312E0B279200A7E995;
+					};
+				};
+			};
+			buildConfigurationList = ABA8DE2D2E0B279200A7E995 /* Build configuration list for PBXProject "lux.suv.driver" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ABA8DE292E0B279200A7E995;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = ABA8DE332E0B279200A7E995 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ABA8DE312E0B279200A7E995 /* lux.suv.driver */,
+				ABA8DE3E2E0B279300A7E995 /* lux.suv.driverTests */,
+				ABA8DE482E0B279300A7E995 /* lux.suv.driverUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ABA8DE302E0B279200A7E995 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8DE3D2E0B279300A7E995 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8DE472E0B279300A7E995 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ABA8DE2E2E0B279200A7E995 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8DE3B2E0B279300A7E995 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8DE452E0B279300A7E995 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ABA8DE412E0B279300A7E995 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABA8DE312E0B279200A7E995 /* lux.suv.driver */;
+			targetProxy = ABA8DE402E0B279300A7E995 /* PBXContainerItemProxy */;
+		};
+		ABA8DE4B2E0B279300A7E995 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABA8DE312E0B279200A7E995 /* lux.suv.driver */;
+			targetProxy = ABA8DE4A2E0B279300A7E995 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		ABA8DE512E0B279300A7E995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Z4X52D786T;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		ABA8DE522E0B279300A7E995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Z4X52D786T;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ABA8DE542E0B279300A7E995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z4X52D786T;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.safademirkan.lux-suv-driver";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ABA8DE552E0B279300A7E995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z4X52D786T;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.safademirkan.lux-suv-driver";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		ABA8DE572E0B279300A7E995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z4X52D786T;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.safademirkan.lux-suv-driverTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lux.suv.driver.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lux.suv.driver";
+			};
+			name = Debug;
+		};
+		ABA8DE582E0B279300A7E995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z4X52D786T;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.safademirkan.lux-suv-driverTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lux.suv.driver.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lux.suv.driver";
+			};
+			name = Release;
+		};
+		ABA8DE5A2E0B279300A7E995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z4X52D786T;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.safademirkan.lux-suv-driverUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = lux.suv.driver;
+			};
+			name = Debug;
+		};
+		ABA8DE5B2E0B279300A7E995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z4X52D786T;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.safademirkan.lux-suv-driverUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = lux.suv.driver;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ABA8DE2D2E0B279200A7E995 /* Build configuration list for PBXProject "lux.suv.driver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABA8DE512E0B279300A7E995 /* Debug */,
+				ABA8DE522E0B279300A7E995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABA8DE532E0B279300A7E995 /* Build configuration list for PBXNativeTarget "lux.suv.driver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABA8DE542E0B279300A7E995 /* Debug */,
+				ABA8DE552E0B279300A7E995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABA8DE562E0B279300A7E995 /* Build configuration list for PBXNativeTarget "lux.suv.driverTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABA8DE572E0B279300A7E995 /* Debug */,
+				ABA8DE582E0B279300A7E995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABA8DE592E0B279300A7E995 /* Build configuration list for PBXNativeTarget "lux.suv.driverUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABA8DE5A2E0B279300A7E995 /* Debug */,
+				ABA8DE5B2E0B279300A7E995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ABA8DE2A2E0B279200A7E995 /* Project object */;
+}
