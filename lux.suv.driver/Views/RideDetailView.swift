@@ -139,6 +139,39 @@ struct RideDetailView: View {
                                     
                                     Spacer()
                                 }
+                                
+                                // Passenger and luggage info
+                                if let passengers = ride.numberOfPassengers {
+                                    HStack {
+                                        Image(systemName: "person.2.fill")
+                                            .foregroundColor(.purple)
+                                            .frame(width: 20)
+                                        
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("Passengers")
+                                                .font(.system(size: 12, weight: .medium))
+                                                .foregroundColor(.white.opacity(0.7))
+                                            
+                                            Text("\(passengers) passenger\(passengers == 1 ? "" : "s")")
+                                                .font(.system(size: 16, weight: .semibold))
+                                                .foregroundColor(.white)
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        if let luggage = ride.numberOfLuggage {
+                                            VStack(alignment: .trailing, spacing: 2) {
+                                                Text("Luggage")
+                                                    .font(.system(size: 12, weight: .medium))
+                                                    .foregroundColor(.white.opacity(0.7))
+                                                
+                                                Text("\(luggage) bag\(luggage == 1 ? "" : "s")")
+                                                    .font(.system(size: 16, weight: .semibold))
+                                                    .foregroundColor(.white)
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                         .padding(24)
@@ -247,6 +280,30 @@ struct RideDetailView: View {
                                         }
                                     }
                                 }
+                                
+                                if let phone = ride.customerPhone {
+                                    HStack {
+                                        Image(systemName: "phone.fill")
+                                            .foregroundColor(.green)
+                                            .frame(width: 20)
+                                        
+                                        Text(phone)
+                                            .font(.system(size: 16, weight: .medium))
+                                            .foregroundColor(.white)
+                                        
+                                        Spacer()
+                                        
+                                        Button(action: {
+                                            if let url = URL(string: "tel:\(phone)") {
+                                                UIApplication.shared.open(url)
+                                            }
+                                        }) {
+                                            Image(systemName: "phone.circle.fill")
+                                                .font(.system(size: 24))
+                                                .foregroundColor(.green)
+                                        }
+                                    }
+                                }
                             }
                         }
                         .padding(24)
@@ -308,7 +365,7 @@ struct RideDetailView: View {
                         // Notes
                         if let notes = ride.notes, !notes.isEmpty {
                             VStack(alignment: .leading, spacing: 16) {
-                                Text("Notes")
+                                Text("Additional Notes")
                                     .font(.system(size: 18, weight: .semibold))
                                     .foregroundColor(.white)
                                 
@@ -555,16 +612,19 @@ struct RideUpdateSheet: View {
         id: "1",
         name: "John Doe",
         email: "john@example.com",
+        phoneNumber: "123-456-7890",
         rideType: "hourly",
         pickup: "123 Main St",
         dropoff: "456 Elm St",
         date: "2025-06-23",
         time: "14:30",
+        numberOfPassengers: 2,
+        numberOfLuggage: 1,
+        additionalNotes: "Please arrive early",
         status: .requested,
         fare: 150.0,
         distance: 25.5,
         duration: 120,
-        notes: "VIP client - prefer classical music",
         createdAt: nil,
         updatedAt: nil
     ))

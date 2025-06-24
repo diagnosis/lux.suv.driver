@@ -65,41 +65,40 @@ class RideService: ObservableObject {
             
             if httpResponse.statusCode == 200 {
                 do {
-                    // Try to decode as array of rides directly first
-                    let ridesArray = try JSONDecoder().decode([Ride].self, from: data)
+                    // Parse the API response format that matches your backend
+                    let apiRides = try JSONDecoder().decode([APIRideResponse].self, from: data)
+                    let convertedRides = apiRides.map { $0.toRide() }
+                    
                     DispatchQueue.main.async {
-                        self.rides = ridesArray
+                        self.rides = convertedRides
                         self.isLoading = false
-                        print("Successfully parsed \(ridesArray.count) rides")
+                        print("✅ Successfully parsed \(convertedRides.count) rides from API")
                     }
                 } catch let decodingError {
-                    print("Failed to decode as [Ride]: \(decodingError)")
+                    print("❌ Failed to decode API response: \(decodingError)")
                     
-                    // Try the wrapped response format
+                    // Try fallback parsing methods
                     do {
-                        let ridesResponse = try JSONDecoder().decode(RidesResponse.self, from: data)
+                        // Try to decode as array of rides directly
+                        let ridesArray = try JSONDecoder().decode([Ride].self, from: data)
                         DispatchQueue.main.async {
-                            self.rides = ridesResponse.rides
+                            self.rides = ridesArray
                             self.isLoading = false
-                            print("Successfully parsed wrapped response with \(ridesResponse.rides.count) rides")
+                            print("✅ Successfully parsed \(ridesArray.count) rides (direct format)")
                         }
-                    } catch let wrappedError {
-                        print("Failed to decode as RidesResponse: \(wrappedError)")
-                        
-                        // Try the API response format you provided
+                    } catch {
+                        // Try the wrapped response format
                         do {
-                            let apiRides = try JSONDecoder().decode([APIRideResponse].self, from: data)
-                            let convertedRides = apiRides.map { $0.toRide() }
+                            let ridesResponse = try JSONDecoder().decode(RidesResponse.self, from: data)
                             DispatchQueue.main.async {
-                                self.rides = convertedRides
+                                self.rides = ridesResponse.rides
                                 self.isLoading = false
-                                print("Successfully parsed API format with \(convertedRides.count) rides")
+                                print("✅ Successfully parsed wrapped response with \(ridesResponse.rides.count) rides")
                             }
-                        } catch let apiError {
-                            print("Failed to decode as [APIRideResponse]: \(apiError)")
-                            
+                        } catch {
+                            print("❌ All parsing methods failed")
                             DispatchQueue.main.async {
-                                self.errorMessage = "Failed to parse rides data. Check console for details."
+                                self.errorMessage = "Failed to parse rides data. Please check the API response format."
                                 self.isLoading = false
                             }
                         }
@@ -119,7 +118,7 @@ class RideService: ObservableObject {
                 }
             }
         } catch {
-            print("Network error: \(error)")
+            print("❌ Network error: \(error)")
             DispatchQueue.main.async {
                 self.errorMessage = error.localizedDescription
                 self.isLoading = false
@@ -161,6 +160,8 @@ class RideService: ObservableObject {
                 return false
             }
             
+            print("Update Ride Response Status: \(httpResponse.statusCode)")
+            
             if httpResponse.statusCode == 200 {
                 // Refresh rides after successful update
                 await fetchRides()
@@ -178,6 +179,7 @@ class RideService: ObservableObject {
                 return false
             }
         } catch {
+            print("❌ Update ride error: \(error)")
             DispatchQueue.main.async {
                 self.errorMessage = error.localizedDescription
             }
@@ -214,6 +216,8 @@ class RideService: ObservableObject {
                 return false
             }
             
+            print("Delete Ride Response Status: \(httpResponse.statusCode)")
+            
             if httpResponse.statusCode == 200 {
                 // Refresh rides after successful deletion
                 await fetchRides()
@@ -231,6 +235,7 @@ class RideService: ObservableObject {
                 return false
             }
         } catch {
+            print("❌ Delete ride error: \(error)")
             DispatchQueue.main.async {
                 self.errorMessage = error.localizedDescription
             }
@@ -271,25 +276,29 @@ class RideService: ObservableObject {
     // Add sample data for testing
     func addSampleRide() {
         let sampleRide = Ride(
-            id: "sample-1",
-            name: "John Doe",
-            email: "john@example.com",
+            id: "sample-\(Date().timeIntervalSince1970)",
+            name: "Sample Customer",
+            email: "sample@example.com",
+            phoneNumber: "555-0123",
             rideType: "hourly",
-            pickup: "123 Main St",
-            dropoff: "456 Elm St",
-            date: "2025-06-23",
-            time: "14:30",
+            pickup: "Sample Pickup Location",
+            dropoff: "Sample Dropoff Location",
+            date: "2025-06-25",
+            time: "15:30",
+            numberOfPassengers: 2,
+            numberOfLuggage: 1,
+            additionalNotes: "This is a sample ride for testing",
             status: .requested,
             fare: 150.0,
             distance: 25.5,
             duration: 120,
-            notes: "VIP client - prefer classical music",
             createdAt: nil,
             updatedAt: nil
         )
         
         DispatchQueue.main.async {
             self.rides.append(sampleRide)
+            print("✅ Added sample ride for testing")
         }
     }
 }

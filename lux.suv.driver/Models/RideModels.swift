@@ -11,16 +11,19 @@ struct Ride: Codable, Identifiable {
     let id: String
     let name: String?
     let email: String?
+    let phoneNumber: String?
     let rideType: String?
     let pickup: String
     let dropoff: String
     let date: String
     let time: String
+    let numberOfPassengers: Int?
+    let numberOfLuggage: Int?
+    let additionalNotes: String?
     let status: RideStatus?
     let fare: Double?
     let distance: Double?
     let duration: Int? // in minutes
-    let notes: String?
     let createdAt: String?
     let updatedAt: String?
     
@@ -31,6 +34,10 @@ struct Ride: Codable, Identifiable {
     
     var customerEmail: String? {
         return email
+    }
+    
+    var customerPhone: String? {
+        return phoneNumber
     }
     
     var pickupLocation: String {
@@ -47,6 +54,10 @@ struct Ride: Codable, Identifiable {
     
     var rideTime: String {
         return time
+    }
+    
+    var notes: String? {
+        return additionalNotes
     }
     
     // Computed property for Date conversion
@@ -121,33 +132,55 @@ struct RidesResponse: Codable {
     let message: String?
 }
 
-// For handling the API response format you provided
+// API Response model that matches your exact API format
 struct APIRideResponse: Codable {
-    let id: String
-    let name: String?
+    let id: Int
+    let yourName: String?
     let email: String?
+    let phoneNumber: String?
     let rideType: String?
-    let pickup: String
-    let dropoff: String
+    let pickupLocation: String
+    let dropoffLocation: String
     let date: String
     let time: String
+    let numberOfPassengers: Int?
+    let numberOfLuggage: Int?
+    let additionalNotes: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case yourName = "your_name"
+        case email
+        case phoneNumber = "phone_number"
+        case rideType = "ride_type"
+        case pickupLocation = "pickup_location"
+        case dropoffLocation = "dropoff_location"
+        case date
+        case time
+        case numberOfPassengers = "number_of_passengers"
+        case numberOfLuggage = "number_of_luggage"
+        case additionalNotes = "additional_notes"
+    }
     
     // Convert to our internal Ride model
     func toRide() -> Ride {
         return Ride(
-            id: id,
-            name: name,
+            id: String(id), // Convert Int to String
+            name: yourName,
             email: email,
+            phoneNumber: phoneNumber,
             rideType: rideType,
-            pickup: pickup,
-            dropoff: dropoff,
+            pickup: pickupLocation,
+            dropoff: dropoffLocation,
             date: date,
             time: time,
-            status: .requested, // Default status
+            numberOfPassengers: numberOfPassengers,
+            numberOfLuggage: numberOfLuggage,
+            additionalNotes: additionalNotes,
+            status: .requested, // Default status for new rides
             fare: nil,
             distance: nil,
             duration: nil,
-            notes: nil,
             createdAt: nil,
             updatedAt: nil
         )
