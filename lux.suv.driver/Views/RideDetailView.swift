@@ -16,7 +16,8 @@ struct RideDetailView: View {
     @State private var isUpdating = false
     
     private var statusColor: Color {
-        switch ride.status {
+        guard let status = ride.status else { return .gray }
+        switch status {
         case .requested: return .blue
         case .accepted: return .green
         case .inProgress: return .orange
@@ -25,18 +26,13 @@ struct RideDetailView: View {
         }
     }
     
-    private var formattedPickupTime: String {
-        guard let pickupDate = ride.pickupDate else { return "Invalid time" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMM d, yyyy 'at' h:mm a"
-        return formatter.string(from: pickupDate)
+    private var formattedDateTime: String {
+        return "\(ride.date) at \(ride.time)"
     }
     
-    private var formattedDropoffTime: String {
-        guard let dropoffDate = ride.dropoffDate else { return "Not set" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        return formatter.string(from: dropoffDate)
+    private var rideTypeDisplay: String {
+        guard let rideType = ride.rideType else { return "Standard" }
+        return RideType(rawValue: rideType)?.displayName ?? rideType.capitalized
     }
     
     var body: some View {
@@ -59,7 +55,7 @@ struct RideDetailView: View {
                         VStack(spacing: 16) {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(ride.customerName ?? "Unknown Customer")
+                                    Text(ride.customerName)
                                         .font(.system(size: 24, weight: .bold))
                                         .foregroundColor(.white)
                                     
@@ -71,15 +67,17 @@ struct RideDetailView: View {
                                 Spacer()
                                 
                                 VStack(alignment: .trailing, spacing: 8) {
-                                    Text(ride.status.displayName)
-                                        .font(.system(size: 14, weight: .semibold))
-                                        .foregroundColor(statusColor)
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 6)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .fill(statusColor.opacity(0.2))
-                                        )
+                                    if let status = ride.status {
+                                        Text(status.displayName)
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .foregroundColor(statusColor)
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 6)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .fill(statusColor.opacity(0.2))
+                                            )
+                                    }
                                     
                                     if let fare = ride.fare {
                                         Text("$\(fare, specifier: "%.2f")")
@@ -99,24 +97,24 @@ struct RideDetailView: View {
                                 )
                         )
                         
-                        // Time Information
+                        // Ride Type & Schedule
                         VStack(alignment: .leading, spacing: 16) {
-                            Text("Schedule")
+                            Text("Ride Information")
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(.white)
                             
                             VStack(spacing: 12) {
                                 HStack {
-                                    Image(systemName: "clock.fill")
-                                        .foregroundColor(.green)
+                                    Image(systemName: "car.fill")
+                                        .foregroundColor(Color(red: 0.8, green: 0.7, blue: 0.2))
                                         .frame(width: 20)
                                     
                                     VStack(alignment: .leading, spacing: 2) {
-                                        Text("Pickup Time")
+                                        Text("Ride Type")
                                             .font(.system(size: 12, weight: .medium))
                                             .foregroundColor(.white.opacity(0.7))
                                         
-                                        Text(formattedPickupTime)
+                                        Text(rideTypeDisplay)
                                             .font(.system(size: 16, weight: .semibold))
                                             .foregroundColor(.white)
                                     }
@@ -124,24 +122,22 @@ struct RideDetailView: View {
                                     Spacer()
                                 }
                                 
-                                if ride.dropoffTime != nil {
-                                    HStack {
-                                        Image(systemName: "clock.fill")
-                                            .foregroundColor(.red)
-                                            .frame(width: 20)
+                                HStack {
+                                    Image(systemName: "clock.fill")
+                                        .foregroundColor(.blue)
+                                        .frame(width: 20)
+                                    
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Scheduled Time")
+                                            .font(.system(size: 12, weight: .medium))
+                                            .foregroundColor(.white.opacity(0.7))
                                         
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            Text("Dropoff Time")
-                                                .font(.system(size: 12, weight: .medium))
-                                                .foregroundColor(.white.opacity(0.7))
-                                            
-                                            Text(formattedDropoffTime)
-                                                .font(.system(size: 16, weight: .semibold))
-                                                .foregroundColor(.white)
-                                        }
-                                        
-                                        Spacer()
+                                        Text(formattedDateTime)
+                                            .font(.system(size: 16, weight: .semibold))
+                                            .foregroundColor(.white)
                                     }
+                                    
+                                    Spacer()
                                 }
                             }
                         }
@@ -172,7 +168,7 @@ struct RideDetailView: View {
                                             .font(.system(size: 12, weight: .medium))
                                             .foregroundColor(.white.opacity(0.7))
                                         
-                                        Text(ride.pickupLocation)
+                                        Text(ride.pickup)
                                             .font(.system(size: 16, weight: .medium))
                                             .foregroundColor(.white)
                                     }
@@ -190,7 +186,7 @@ struct RideDetailView: View {
                                             .font(.system(size: 12, weight: .medium))
                                             .foregroundColor(.white.opacity(0.7))
                                         
-                                        Text(ride.dropoffLocation)
+                                        Text(ride.dropoff)
                                             .font(.system(size: 16, weight: .medium))
                                             .foregroundColor(.white)
                                     }
@@ -210,48 +206,58 @@ struct RideDetailView: View {
                         )
                         
                         // Customer Information
-                        if ride.customerPhone != nil {
-                            VStack(alignment: .leading, spacing: 16) {
-                                Text("Customer")
-                                    .font(.system(size: 18, weight: .semibold))
-                                    .foregroundColor(.white)
+                        VStack(alignment: .leading, spacing: 16) {
+                            Text("Customer")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(.white)
+                            
+                            VStack(spacing: 12) {
+                                HStack {
+                                    Image(systemName: "person.fill")
+                                        .foregroundColor(.purple)
+                                        .frame(width: 20)
+                                    
+                                    Text(ride.customerName)
+                                        .font(.system(size: 16, weight: .medium))
+                                        .foregroundColor(.white)
+                                    
+                                    Spacer()
+                                }
                                 
-                                VStack(spacing: 12) {
-                                    if let phone = ride.customerPhone {
-                                        HStack {
-                                            Image(systemName: "phone.fill")
-                                                .foregroundColor(.blue)
-                                                .frame(width: 20)
-                                            
-                                            Text(phone)
-                                                .font(.system(size: 16, weight: .medium))
-                                                .foregroundColor(.white)
-                                            
-                                            Spacer()
-                                            
-                                            Button(action: {
-                                                if let url = URL(string: "tel:\(phone)") {
-                                                    UIApplication.shared.open(url)
-                                                }
-                                            }) {
-                                                Image(systemName: "phone.circle.fill")
-                                                    .font(.system(size: 24))
-                                                    .foregroundColor(.blue)
+                                if let email = ride.email {
+                                    HStack {
+                                        Image(systemName: "envelope.fill")
+                                            .foregroundColor(.blue)
+                                            .frame(width: 20)
+                                        
+                                        Text(email)
+                                            .font(.system(size: 16, weight: .medium))
+                                            .foregroundColor(.white)
+                                        
+                                        Spacer()
+                                        
+                                        Button(action: {
+                                            if let url = URL(string: "mailto:\(email)") {
+                                                UIApplication.shared.open(url)
                                             }
+                                        }) {
+                                            Image(systemName: "envelope.circle.fill")
+                                                .font(.system(size: 24))
+                                                .foregroundColor(.blue)
                                         }
                                     }
                                 }
                             }
-                            .padding(24)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color.white.opacity(0.1))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 16)
-                                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
-                                    )
-                            )
                         }
+                        .padding(24)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.white.opacity(0.1))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                )
+                        )
                         
                         // Trip Details
                         if ride.distance != nil || ride.duration != nil {
@@ -322,7 +328,7 @@ struct RideDetailView: View {
                         }
                         
                         // Action Buttons
-                        if ride.status == .requested || ride.status == .accepted {
+                        if let status = ride.status, status == .requested || status == .accepted {
                             VStack(spacing: 12) {
                                 Button(action: {
                                     showingUpdateSheet = true
@@ -391,13 +397,15 @@ struct RideDetailView: View {
             }
         }
         .sheet(isPresented: $showingUpdateSheet) {
-            RideUpdateSheet(ride: ride) { newStatus, notes in
-                Task {
-                    isUpdating = true
-                    let success = await rideService.updateRide(id: ride.id, status: newStatus, notes: notes)
-                    isUpdating = false
-                    if success {
-                        dismiss()
+            if let status = ride.status {
+                RideUpdateSheet(ride: ride, currentStatus: status) { newStatus, notes in
+                    Task {
+                        isUpdating = true
+                        let success = await rideService.updateRide(id: ride.id, status: newStatus, notes: notes)
+                        isUpdating = false
+                        if success {
+                            dismiss()
+                        }
                     }
                 }
             }
@@ -422,16 +430,18 @@ struct RideDetailView: View {
 
 struct RideUpdateSheet: View {
     let ride: Ride
+    let currentStatus: RideStatus
     let onUpdate: (RideStatus, String?) -> Void
     
     @Environment(\.dismiss) private var dismiss
     @State private var selectedStatus: RideStatus
     @State private var notes: String = ""
     
-    init(ride: Ride, onUpdate: @escaping (RideStatus, String?) -> Void) {
+    init(ride: Ride, currentStatus: RideStatus, onUpdate: @escaping (RideStatus, String?) -> Void) {
         self.ride = ride
+        self.currentStatus = currentStatus
         self.onUpdate = onUpdate
-        self._selectedStatus = State(initialValue: ride.status)
+        self._selectedStatus = State(initialValue: currentStatus)
         self._notes = State(initialValue: ride.notes ?? "")
     }
     
@@ -543,19 +553,19 @@ struct RideUpdateSheet: View {
 #Preview {
     RideDetailView(ride: Ride(
         id: "1",
-        customerId: "customer1",
-        customerName: "John Doe",
-        customerPhone: "+1234567890",
-        pickupLocation: "123 Main St, New York, NY",
-        dropoffLocation: "456 Broadway, New York, NY",
-        pickupTime: "2025-01-15T10:00:00Z",
-        dropoffTime: nil,
+        name: "John Doe",
+        email: "john@example.com",
+        rideType: "hourly",
+        pickup: "123 Main St",
+        dropoff: "456 Elm St",
+        date: "2025-06-23",
+        time: "14:30",
         status: .requested,
-        fare: 45.50,
-        distance: 5.2,
-        duration: 25,
-        notes: "Customer prefers classical music",
-        createdAt: "2025-01-14T15:30:00Z",
-        updatedAt: "2025-01-14T15:30:00Z"
+        fare: 150.0,
+        distance: 25.5,
+        duration: 120,
+        notes: "VIP client - prefer classical music",
+        createdAt: nil,
+        updatedAt: nil
     ))
 }

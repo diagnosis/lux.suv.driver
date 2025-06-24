@@ -58,10 +58,38 @@ class RideService: ObservableObject {
             }
             
             if httpResponse.statusCode == 200 {
-                let ridesResponse = try JSONDecoder().decode(RidesResponse.self, from: data)
-                DispatchQueue.main.async {
-                    self.rides = ridesResponse.rides
-                    self.isLoading = false
+                // Try to decode as array of rides directly first
+                if let ridesArray = try? JSONDecoder().decode([Ride].self, from: data) {
+                    DispatchQueue.main.async {
+                        self.rides = ridesArray
+                        self.isLoading = false
+                    }
+                }
+                // If that fails, try the wrapped response format
+                else if let ridesResponse = try? JSONDecoder().decode(RidesResponse.self, from: data) {
+                    DispatchQueue.main.async {
+                        self.rides = ridesResponse.rides
+                        self.isLoading = false
+                    }
+                }
+                // If both fail, try the API response format you provided
+                else if let apiRides = try? JSONDecoder().decode([APIRideResponse].self, from: data) {
+                    let convertedRides = apiRides.map { $0.toRide() }
+                    DispatchQueue.main.async {
+                        self.rides = convertedRides
+                        self.isLoading = false
+                    }
+                }
+                else {
+                    // Debug: Print the raw response
+                    if let jsonString = String(data: data, encoding: .utf8) {
+                        print("Raw API Response: \(jsonString)")
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.errorMessage = "Failed to parse rides data"
+                        self.isLoading = false
+                    }
                 }
             } else {
                 if let errorResponse = try? JSONDecoder().decode(APIError.self, from: data) {
@@ -71,7 +99,7 @@ class RideService: ObservableObject {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.errorMessage = "Failed to fetch rides"
+                        self.errorMessage = "Failed to fetch rides (Status: \(httpResponse.statusCode))"
                         self.isLoading = false
                     }
                 }
@@ -129,7 +157,7 @@ class RideService: ObservableObject {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.errorMessage = "Failed to update ride"
+                        self.errorMessage = "Failed to update ride (Status: \(httpResponse.statusCode))"
                     }
                 }
                 return false
@@ -182,7 +210,7 @@ class RideService: ObservableObject {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.errorMessage = "Failed to delete ride"
+                        self.errorMessage = "Failed to delete ride (Status: \(httpResponse.statusCode))"
                     }
                 }
                 return false
@@ -212,6 +240,31 @@ class RideService: ObservableObject {
         }.sorted { ride1, ride2 in
             guard let date1 = ride1.pickupDate, let date2 = ride2.pickupDate else { return false }
             return date1 < date2
+        }
+    }
+    
+    // Add sample data for testing
+    func addSampleRide() {
+        let sampleRide = Ride(
+            id: "1",
+            name: "John Doe",
+            email: "john@example.com",
+            rideType: "hourly",
+            pickup: "123 Main St",
+            dropoff: "456 Elm St",
+            date: "2025-06-23",
+            time: "14:30",
+            status: .requested,
+            fare: 150.0,
+            distance: 25.5,
+            duration: 120,
+            notes: "VIP client - prefer classical music",
+            createdAt: nil,
+            updatedAt: nil
+        )
+        
+        DispatchQueue.main.async {
+            self.rides.append(sampleRide)
         }
     }
 }

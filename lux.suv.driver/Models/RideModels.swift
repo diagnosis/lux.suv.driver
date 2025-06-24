@@ -9,29 +9,61 @@ import Foundation
 
 struct Ride: Codable, Identifiable {
     let id: String
-    let customerId: String?
-    let customerName: String?
-    let customerPhone: String?
-    let pickupLocation: String
-    let dropoffLocation: String
-    let pickupTime: String
-    let dropoffTime: String?
-    let status: RideStatus
+    let name: String?
+    let email: String?
+    let rideType: String?
+    let pickup: String
+    let dropoff: String
+    let date: String
+    let time: String
+    let status: RideStatus?
     let fare: Double?
     let distance: Double?
     let duration: Int? // in minutes
     let notes: String?
-    let createdAt: String
-    let updatedAt: String
+    let createdAt: String?
+    let updatedAt: String?
+    
+    // Computed properties for better UI display
+    var customerName: String {
+        return name ?? "Unknown Customer"
+    }
+    
+    var customerEmail: String? {
+        return email
+    }
+    
+    var pickupLocation: String {
+        return pickup
+    }
+    
+    var dropoffLocation: String {
+        return dropoff
+    }
+    
+    var rideDate: String {
+        return date
+    }
+    
+    var rideTime: String {
+        return time
+    }
     
     // Computed property for Date conversion
+    var pickupDateTime: Date? {
+        let dateTimeString = "\(date) \(time)"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        return formatter.date(from: dateTimeString)
+    }
+    
     var pickupDate: Date? {
-        return ISO8601DateFormatter().date(from: pickupTime)
+        return pickupDateTime
     }
     
     var dropoffDate: Date? {
-        guard let dropoffTime = dropoffTime else { return nil }
-        return ISO8601DateFormatter().date(from: dropoffTime)
+        // For now, we don't have dropoff time in the response
+        return nil
     }
 }
 
@@ -63,6 +95,22 @@ enum RideStatus: String, Codable, CaseIterable {
     }
 }
 
+enum RideType: String, Codable, CaseIterable {
+    case hourly = "hourly"
+    case pointToPoint = "point_to_point"
+    case airport = "airport"
+    case event = "event"
+    
+    var displayName: String {
+        switch self {
+        case .hourly: return "Hourly"
+        case .pointToPoint: return "Point to Point"
+        case .airport: return "Airport Transfer"
+        case .event: return "Event"
+        }
+    }
+}
+
 struct RideUpdateRequest: Codable {
     let status: RideStatus
     let notes: String?
@@ -71,4 +119,37 @@ struct RideUpdateRequest: Codable {
 struct RidesResponse: Codable {
     let rides: [Ride]
     let message: String?
+}
+
+// For handling the API response format you provided
+struct APIRideResponse: Codable {
+    let id: String
+    let name: String?
+    let email: String?
+    let rideType: String?
+    let pickup: String
+    let dropoff: String
+    let date: String
+    let time: String
+    
+    // Convert to our internal Ride model
+    func toRide() -> Ride {
+        return Ride(
+            id: id,
+            name: name,
+            email: email,
+            rideType: rideType,
+            pickup: pickup,
+            dropoff: dropoff,
+            date: date,
+            time: time,
+            status: .requested, // Default status
+            fare: nil,
+            distance: nil,
+            duration: nil,
+            notes: nil,
+            createdAt: nil,
+            updatedAt: nil
+        )
+    }
 }
