@@ -146,12 +146,14 @@ struct RideCard: View {
     let onTap: () -> Void
     
     private var statusColor: Color {
-        switch ride.status {
+        guard let status = ride.status else { return .gray } // Fallback for nil status
+        switch status {
         case .requested: return .blue
         case .accepted: return .green
         case .inProgress: return .orange
         case .completed: return .gray
         case .cancelled: return .red
+        // Add any other cases if RideStatus has more values
         }
     }
     
@@ -180,7 +182,7 @@ struct RideCard: View {
                     Spacer()
                     
                     VStack(alignment: .trailing, spacing: 4) {
-                        Text(ride.status.displayName)
+                        Text(ride.status?.displayName ?? "Unknown") // Safely unwrap status
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundColor(statusColor)
                             .padding(.horizontal, 8)
