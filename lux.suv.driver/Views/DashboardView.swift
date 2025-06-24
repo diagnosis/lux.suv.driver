@@ -52,10 +52,15 @@ struct DashboardView: View {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
             appearance.backgroundColor = UIColor(red: 0.05, green: 0.05, blue: 0.1, alpha: 1.0)
-            appearance.selectionIndicatorTint = UIColor(red: 0.8, green: 0.7, blue: 0.2, alpha: 1.0)
+            
+            // Set selected item tint color
+            UITabBar.appearance().tintColor = UIColor(red: 0.8, green: 0.7, blue: 0.2, alpha: 1.0)
+            UITabBar.appearance().unselectedItemTintColor = UIColor.white.withAlphaComponent(0.6)
             
             UITabBar.appearance().standardAppearance = appearance
-            UITabBar.appearance().scrollEdgeAppearance = appearance
+            if #available(iOS 15.0, *) {
+                UITabBar.appearance().scrollEdgeAppearance = appearance
+            }
         }
     }
 }
@@ -248,7 +253,7 @@ struct UpcomingRideCard: View {
     let ride: Ride
     
     private var formattedTime: String {
-        guard let pickupDate = ride.pickupDate else { return "Invalid time" }
+        guard let pickupDate = ride.pickupDate else { return ride.time }
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
         return formatter.string(from: pickupDate)
@@ -310,6 +315,16 @@ struct UpcomingRideCard: View {
 struct ProfileView: View {
     @StateObject private var authService = AuthService.shared
     
+    private var profileInitial: String {
+        if let name = authService.currentDriver?.name, let firstChar = name.first {
+            return String(firstChar).uppercased()
+        } else if let username = authService.currentDriver?.username, let firstChar = username.first {
+            return String(firstChar).uppercased()
+        } else {
+            return "D"
+        }
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -339,7 +354,7 @@ struct ProfileView: View {
                             )
                             .frame(width: 100, height: 100)
                             .overlay(
-                                Text((authService.currentDriver?.name?.first?.uppercased() ?? authService.currentDriver?.username?.first?.uppercased()) ?? "D")
+                                Text(profileInitial)
                                     .font(.system(size: 36, weight: .bold))
                                     .foregroundColor(.black)
                             )
